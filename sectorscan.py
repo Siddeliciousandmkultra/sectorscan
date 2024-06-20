@@ -25,6 +25,7 @@ def fetch_data(url):
 # Get sectors data
 url = "https://api.sectors.app/v1/subsectors/"
 sectors = fetch_data(url)
+sectors = [item['subsector'] for item in sectors]
 sectors.sort()
 
 def format_option(option):
