@@ -49,7 +49,7 @@ else:
     df_mc_change = pd.DataFrame()
 
     for i in options:
-        url = f"https://api.sectors.app/v1/sector/report/{i}/?sections=market_cap"
+        url = f"https://api.sectors.app/v1/subsector/report/{i}/?sections=market_cap"
         market_cap = fetch_data(url)
 
         mc_curr = pd.DataFrame({
@@ -72,7 +72,7 @@ else:
         df_mc_change = pd.concat([df_mc_change, mc_change], ignore_index=True)
 
     # Finalize df_mc_curr
-    url = f"https://api.sectors.app/v1/sector/report/{sectors[0]}/?sections=idx"
+    url = f"https://api.sectors.app/v1/subsector/report/{sectors[0]}/?sections=idx"
     idx = fetch_data(url)
 
     idx_mc = idx["idx"]["idx_cap"]
@@ -175,7 +175,7 @@ else:
     df_valuation = pd.DataFrame()
 
     for i in options:
-        url = f"https://api.sectors.app/v1/sector/report/{i}/?sections=valuation"
+        url = f"https://api.sectors.app/v1/subsector/report/{i}/?sections=valuation"
         valuation = fetch_data(url)
         df = pd.DataFrame(valuation["valuation"]["historical_valuation"])
         df["Sector"] = valuation["sub_sector"]
@@ -226,7 +226,7 @@ else:
     df_top_revenue = pd.DataFrame()
 
     for i in options:
-        url = f"https://api.sectors.app/v1/sector/report/{i}/?sections=companies"
+        url = f"https://api.sectors.app/v1/subsector/report/{i}/?sections=companies"
         company = fetch_data(url)
 
         keys = ["top_mcap", "top_growth", "top_profit", "top_revenue"]
