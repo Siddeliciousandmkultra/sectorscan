@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import requests
 import altair as alt
+from datetime import datetime, timedelta
 
 # Title
 st.title("SectorScan")
@@ -72,10 +73,12 @@ else:
         df_mc_change = pd.concat([df_mc_change, mc_change], ignore_index=True)
 
     # Finalize df_mc_curr
-    url = f"https://api.sectors.app/v1/subsector/report/{sectors[0]}/?sections=idx"
+    today = datetime.today()
+    yesterday = today - timedelta(days=1)
+    formatted_yesterday = yesterday.strftime('%Y-%m-%d')
+    url = f"https://api.sectors.app/v1/idx-total/?start={formatted_yesterday}"
     idx = fetch_data(url)
-
-    idx_mc = idx["idx"]["idx_cap"]
+    idx_mc = idx[-1]["idx_total_market_cap"]
 
     df_idx_mc = pd.DataFrame({
             "Sector": "Others",
@@ -242,10 +245,10 @@ else:
         df_top_profit = pd.concat([df_top_profit, dfs["top_profit"]], ignore_index=True)
         df_top_revenue = pd.concat([df_top_revenue, dfs["top_revenue"]], ignore_index=True)
 
-    df_top_mc.columns = ["Symbol", "Market Cap", "Sector"]
-    df_top_growth.columns = ["Symbol", "Revenue Growth", "Sector"]
-    df_top_profit.columns = ["Symbol", "Profit", "Sector"]
-    df_top_revenue.columns = ["Symbol", "Revenue", "Sector"]
+    df_top_mc.columns = ["Name", "Symbol", "Market Cap", "Sector"]
+    df_top_growth.columns = ["Name", "Symbol", "Revenue Growth", "Sector"]
+    df_top_profit.columns = ["Name", "Symbol", "Profit", "Sector"]
+    df_top_revenue.columns = ["Name", "Symbol", "Revenue", "Sector"]
 
     # Finalize df_top_mc
     df_top_mc["Market Cap (Trillion IDR)"] = df_top_mc["Market Cap"]/10**12
