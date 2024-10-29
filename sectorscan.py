@@ -9,7 +9,7 @@ st.title("SectorScan")
 
 @st.cache_data
 def fetch_data(url):
-  api_key = st.secrets["SECTORS_KEY"]
+  api_key = st.secrets["1d7b38388e39baad0c35d9cd78975f981ebab54957725b0aaffa1732811350f8"]
 
   headers = {
       "Authorization": api_key
